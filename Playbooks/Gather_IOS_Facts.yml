@@ -1,0 +1,21 @@
+---
+- hosts: all
+  gather_facts: no
+  connection: local
+
+  vars:
+    cli:
+      host: "{{ inventory_hostname }}"
+      username: cisco
+      password: cisco
+      transport: cli
+
+  tasks:
+    - name: Gather IOS facts    
+      ios_facts:        
+        provider: "{{ cli }}"
+        #gather_subset:
+        #  - config
+      register: output
+
+    - debug: msg="Serial num for {{ ansible_net_hostname }} is {{ ansible_net_serialnum }}"

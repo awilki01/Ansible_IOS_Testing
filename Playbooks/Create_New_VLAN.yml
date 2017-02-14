@@ -1,0 +1,35 @@
+---
+- hosts: switches
+  gather_facts: no
+  connection: local
+
+  vars:
+    cli:
+      host: "{{ inventory_hostname }}"
+      username: cisco
+      password: cisco
+      transport: cli
+
+  tasks:
+    - name: Create new vlan    
+      ios_config:    
+        provider: "{{ cli }}"    
+        lines:
+          - vlan 100
+          
+    - name: Create new vlan name   
+      ios_config:    
+        provider: "{{ cli }}"  
+        parents: vlan 100  
+        match: exact
+        lines:
+          - name TestVLAN100
+
+    - name: Save config 
+      ios_command:   
+        provider: "{{ cli }}" 
+        commands: wr mem
+
+
+
+    

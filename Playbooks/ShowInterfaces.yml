@@ -11,13 +11,12 @@
       transport: cli
 
   tasks:
-  - name: show version of devices
+  - name: show interfaces
     register: output
     ios_command:
       provider: "{{ cli }}"
-      commands: show version
-      wait_for: result[0] contains IOS
+      commands: show interfaces
+      #wait_for: result[0] contains 
      
 
   - debug: msg="{{ output.stdout_lines }}"
-
